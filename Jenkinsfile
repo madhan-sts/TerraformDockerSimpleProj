@@ -37,7 +37,7 @@ pipeline{
             steps{
                 bat '''
                     cd TerraformDockerSimpleProj/
-                    terraform apply --auto-approve
+                    terraform apply --auto-approve 
                 '''
             }
         }
