@@ -1,19 +1,49 @@
 pipeline{
     agent any
+    tool name: {
+        'terraform', type: 'terraform'
+    }
     stages {
-        stage('Build') {
+        stage('Cloning Repo') {
             steps {
-                echo 'Building..'
+                echo 'Cloning..'
+                bat "git clone https://github.com/madhan-sts/TerraformDockerSimpleProj.git"
+
             }
         }
-        stage('Test') {
+        stage('Terraform Version') {
             steps {
-                echo 'Testing..'
+                bat 'terraform --version'
             }
         }
-        stage('Deploy') {
+        stage('Terraform init') {
             steps {
-                echo 'Deploying....'
+                bat '''
+                    cd TerraformDockerSimpleProj/
+                    terraform init
+                '''
+            }
+        }
+        stage('Terraform plan'){
+            steps{
+                bat '''
+                    cd TerraformDockerSimpleProj/
+                    terraform plan -out=tfplan.out
+                    terraform show -json tfplan.out
+                '''
+            }
+        }
+        stage('Terraform apply'){
+            steps{
+                bat '''
+                    cd TerraformDockerSimpleProj/
+                    terraform apply --auto-approve
+                '''
+            }
+        }
+        post { 
+            always { 
+                cleanWs()
             }
         }
     }
