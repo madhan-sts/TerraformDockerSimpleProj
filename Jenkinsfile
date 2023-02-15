@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    options {
+        skipDefaultCheckout(true)
+    }    
     tools {
        terraform 'terraform'
     }
@@ -41,5 +44,11 @@ pipeline{
                 '''
             }
         }
+        post {
+            // Clean after build
+            always {
+                cleanWs()
+            }
+        }        
     }
 }
