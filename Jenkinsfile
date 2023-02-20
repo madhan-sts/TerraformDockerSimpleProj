@@ -43,12 +43,13 @@ pipeline{
                     terraform apply --auto-approve 
                 '''
             }
-        }
-        post {
-            // Clean after build
-            always {
-                cleanWs(cleanWhenFailure:true,deleteDirs:true,cleanWhenSuccess:true)
-            }
         }        
     }
+    post {
+        // Clean after build
+        always {
+            cleanWs(cleanWhenFailure:true,deleteDirs:true,cleanWhenSuccess:true)
+        }
+    }    
 }
+
