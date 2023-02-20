@@ -47,7 +47,7 @@ pipeline{
         post {
             // Clean after build
             always {
-                cleanWs()
+                cleanWs(cleanWhenFailure:true,deleteDirs:true,cleanWhenSuccess:true)
             }
         }        
     }
